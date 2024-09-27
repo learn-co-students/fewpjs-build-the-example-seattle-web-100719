@@ -4,8 +4,34 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+document.addEventListener("DOMContentLoaded", addLikeEvents)
 
+function addLikeEvents() {
+  const likes = document.querySelectorAll(".like-glyph")
+  for (let i = 0; i < likes.length; i++) {
+    likes[i].addEventListener("click", event => { clickEvent(event) })
+  }
+};
 
+function clickEvent(event) {
+  mimicServerCall()
+    .then(() => toggleHeart(event))
+    .catch(error => { toggleError()})
+};
+
+function toggleHeart(event) {
+  if (event.target.className === "activated-heart") {
+    event.target.className = ""
+  } else {
+    event.target.className = "activated-heart"
+  }
+}
+
+function toggleError() {
+  const errorMessage = document.getElementById("modal")
+  errorMessage.className = ""
+  setTimeout(() => { errorMessage.className = "hidden"}, 5000)
+}
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
